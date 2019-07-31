@@ -6,12 +6,12 @@ import { ChromeDebugSession, logger, telemetry } from 'vscode-chrome-debug-core'
 import * as path from 'path';
 import * as os from 'os';
 
-import { NodeDebugAdapter } from './nodeDebugAdapter';
+import { ExtendedNodeDebugAdapter } from './nodeDebugAdapter';
 
 ChromeDebugSession.run(ChromeDebugSession.getSession(
     {
         logFilePath: path.join(os.tmpdir(), 'vscode-node-debug2.txt'), // non-.txt file types can't be uploaded to github
-        adapter: NodeDebugAdapter,
+        adapter: ExtendedNodeDebugAdapter,
         extensionName: 'node-debug2'
     }));
 

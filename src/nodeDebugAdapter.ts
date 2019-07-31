@@ -2,7 +2,7 @@
  * Copyright (C) Microsoft Corporation. All rights reserved.
  *--------------------------------------------------------*/
 
-import { ChromeDebugAdapter, chromeUtils, ISourceMapPathOverrides, utils as CoreUtils, logger, telemetry as CoreTelemetry, ISetBreakpointResult, ISetBreakpointsArgs, Crdp, InternalSourceBreakpoint, ChromeDebugSession, IOnPausedResult } from 'vscode-chrome-debug-core';
+import { ChromeDebugAdapter, chromeUtils, ISourceMapPathOverrides, utils as CoreUtils, logger, telemetry as CoreTelemetry, ISetBreakpointResult, ISetBreakpointsArgs, Crdp, InternalSourceBreakpoint, ChromeDebugSession, IOnPausedResult, IEvaluateResponseBody } from 'vscode-chrome-debug-core';
 const telemetry = CoreTelemetry.telemetry;
 
 import { DebugProtocol } from 'vscode-debugprotocol';
@@ -21,6 +21,7 @@ import * as wsl from './wslSupport';
 
 import * as nls from 'vscode-nls';
 import { FinishedStartingUpEventArguments } from 'vscode-chrome-debug-core/lib/src/executionTimingsReporter';
+import { ReasonType } from 'vscode-chrome-debug-core/lib/src/chrome/stoppedEvent';
 let localize = nls.loadMessageBundle();
 
 const DefaultSourceMapPathOverrides: ISourceMapPathOverrides = {
@@ -989,5 +990,21 @@ function getSupportedDebugArgsForVersion(semVerString): DebugArgs {
     } else {
         logger.log(`Using --inspect --debug-brk, Node version ${semVerString} detected`);
         return DebugArgs.Inspect_DebugBrk;
+    }
+}
+
+export class ExtendedNodeDebugAdapter extends NodeDebugAdapter {
+
+    protected async onPaused(notification: Crdp.Debugger.PausedEvent, expectingStopReason: ReasonType): Promise<IOnPausedResult> {
+        // If we don't have the entry location, this must be the entry pause
+        const result = await super.onPaused(notification, expectingStopReason);
+        if (result.didPause) {
+            const threadId = this.threads().threads[0].id;
+            const trace = await this.stackTrace({ threadId, levels: 1 });
+            const currentFrameId = trace.stackFrames[0].id;
+
+            this._session.sendEvent({ type: 'event', seq: 0, event: 'paused', body: { currentFrameId  } });
+        }
+        return result;
     }
 }
