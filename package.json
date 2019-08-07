@@ -1,7 +1,7 @@
 {
   "name": "node-debug2-with-pause-events",
   "displayName": "Node Debug With Pause Events",
-  "version": "1.33.0",
+  "version": "1.33.1",
   "publisher": "hediet",
   "description": "Node Debug Adapter that emits events when paused. Required for the Debug Visualizer Extension.",
   "icon": "images/node-debug-icon.png",
