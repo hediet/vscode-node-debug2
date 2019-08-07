@@ -1,7 +1,7 @@
 {
   "name": "node-debug2-with-pause-events",
   "displayName": "Node Debug With Pause Events",
-  "version": "1.33.1",
+  "version": "1.33.2",
   "publisher": "hediet",
   "description": "Node Debug Adapter that emits events when paused. Required for the Debug Visualizer Extension.",
   "icon": "images/node-debug-icon.png",
@@ -61,10 +61,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Microsoft/vscode-node-debug2.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Microsoft/vscode-node-debug2/issues"
+    "url": "https://github.com/hediet/vscode-node-debug2.git"
   },
   "contributes": {
     "breakpoints": [
