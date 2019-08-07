@@ -1,16 +1,9 @@
-# Node Debug
-[![Build Status](https://vscode.visualstudio.com/_apis/public/build/definitions/d3aa0b57-eb08-43b8-9aec-0c0a0d5d5ad0/8/badge)](https://vscode.visualstudio.com/vscode-node-debug2/_build/index?definitionId=8)
+# Node Debug With Pause Events
 
-This extension is bundled with Visual Studio Code and together with **Node Debug (legacy)** forms the [Node.js](https://nodejs.org) debugging experience.
+This is a fork of (vscode-node-debug2)[https://github.com/microsoft/vscode-node-debug2] and provides the `node-debug2-with-pause-events` and `extensionHost-with-pause-event` debug adapters.
+They are like `node-debug2` and `extensionHost`, but send a custom pause event when the debugger pauses.
 
-**Node Debug** is the debugger for Node.js versions >= 8.0.
-
-See a general overview of debugging in VS Code [here](https://code.visualstudio.com/docs/editor/debugging).
-
-Documentation for Node.js specific debugging can be found [here](https://code.visualstudio.com/docs/nodejs/nodejs-debugging).
-
-Please submit bugs and feature requests to the [VS Code repository](https://github.com/microsoft/vscode/issues).
-
+This is required for my Debug Visualizer Extension.
 
 ## License
 
